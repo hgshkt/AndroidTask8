@@ -1,11 +1,11 @@
-package com.hgshkt.androidtask8.db.dao
+package com.hgshkt.androidtask8.data.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.hgshkt.androidtask8.db.model.TaskDB
+import com.hgshkt.androidtask8.data.db.model.TaskDB
 
 @Dao
 interface TaskDao {
