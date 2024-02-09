@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.hgshkt.androidtask8.R
+import com.hgshkt.androidtask8.view.viewModel.MainViewModel
 
 class CreateTaskFragment: Fragment() {
 
-    private lateinit var viewModel: CreateViewModel
+    private val viewModel: MainViewModel by activityViewModels()
 
     private lateinit var descriptionEditText: EditText
     private lateinit var addButton: Button
@@ -37,7 +38,6 @@ class CreateTaskFragment: Fragment() {
     }
 
     private fun init(view: View) {
-        viewModel = ViewModelProvider(requireActivity()).get(CreateViewModel::class.java)
         descriptionEditText = view.findViewById(R.id.descriptionEditText)
         addButton = view.findViewById(R.id.createFragmentAddButton)
     }

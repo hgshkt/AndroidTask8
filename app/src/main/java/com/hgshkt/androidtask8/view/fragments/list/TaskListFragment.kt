@@ -5,24 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.hgshkt.androidtask8.R
+import com.hgshkt.androidtask8.view.fragments.create.CreateTaskFragment
 import com.hgshkt.androidtask8.view.model.TaskDisplay
+import com.hgshkt.androidtask8.view.viewModel.MainViewModel
 
 class TaskListFragment : Fragment() {
 
-    private lateinit var viewModel: ListViewModel
+    private val viewModel: MainViewModel by activityViewModels()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var addButton: FloatingActionButton
 
     private var taskList = mutableListOf<TaskDisplay>()
-
-    var addButtonClick: () -> Unit = {}
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +41,12 @@ class TaskListFragment : Fragment() {
         updateUI()
 
         addButton.setOnClickListener {
-            addButtonClick()
+            val createFragment = CreateTaskFragment()
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, createFragment)
+                .addToBackStack(createFragment.javaClass.name)
+                .commit()
         }
 
         viewModel.tasksLiveData.observeForever { list ->
@@ -75,7 +81,6 @@ class TaskListFragment : Fragment() {
     }
 
     private fun init(view: View) {
-        viewModel = ViewModelProvider(requireActivity()).get(ListViewModel::class.java)
         recyclerView = view.findViewById(R.id.taskListRecyclerView)
         addButton = view.findViewById(R.id.taskListFragmentAddButton)
     }
